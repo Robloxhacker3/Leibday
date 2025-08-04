@@ -1,196 +1,133 @@
-.container{
-    background: #ff017e;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+body {
+    margin: 0;
+    overflow: hidden; /* Hide overflow to prevent scrollbars during animation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #87CEEB; /* Sky blue background */
+    font-family: 'Arial', sans-serif;
 }
 
-.cake{
-    background: linear-gradient(145deg, #f0cbff,#caabe6);
-    height: 70px;
-    width: 180px;
-    border-radius: 5px;
-    position: absolute;
-}
-
-.cake1{
-    bottom: 30px;
-    left: 60px;
-}
-
-.cream{
-    background: #750de0;
-    height: 10px;
+.animation-container {
+    position: relative;
     width: 100%;
-    position: absolute;
-    top: 30px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.choco{
+.cake-container {
+    position: relative;
+    width: 200px; /* Base width of the cake */
+    height: 0; /* Will grow with layers */
+    transform: translateY(-500px); /* Start off-screen at the top */
+    animation: cakeFall 2s forwards cubic-bezier(0.17, 0.84, 0.44, 1);
+    /* Delay for text animation */
+}
+
+.cake-layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FFC0CB; /* Pink cake color */
+    border: 2px solid #FF69B4; /* Darker pink border */
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    opacity: 0; /* Start hidden */
+}
+
+.layer-base {
+    width: 200px;
+    height: 60px;
+    bottom: 0;
+    animation: layerAppear 0.5s forwards 2.2s; /* Appear after cakeFall */
+}
+
+.layer-middle {
+    width: 160px;
+    height: 50px;
+    bottom: 60px; /* Position above base layer */
+    animation: layerAppear 0.5s forwards 2.4s; /* Appear slightly after base */
+}
+
+.layer-top {
+    width: 120px;
+    height: 40px;
+    bottom: 110px; /* Position above middle layer */
+    animation: layerAppear 0.5s forwards 2.6s; /* Appear slightly after middle */
+}
+
+.candle-container {
+    position: absolute;
+    top: 95px; /* Position above the top layer */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: candleAppear 0.5s forwards 3.5s; /* Appear after cake layers */
+}
+
+.candle {
+    width: 10px;
+    height: 40px;
+    background-color: #FFFF00; /* Yellow candle */
+    border-radius: 2px;
     position: relative;
 }
 
-.choco div{
-    background: #663200;
-    height: 12.5px;
-    width: 25px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+.flame {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 15px solid #FF4500; /* Orange-red flame */
     position: absolute;
+    top: -10px;
+    left: 0;
+    animation: flameGlow 0.3s infinite alternate 3.8s; /* Flame starts glowing after appearing */
+    filter: drop-shadow(0 0 5px #FFD700);
 }
 
-.choco div:nth-child(1){
-    left: -2px;
-}
-
-.choco div:nth-child(2){
-    left: 26px;
-}
-
-.choco div:nth-child(3){
-    left: 52px;
-}
-
-.choco div:nth-child(4){
-    left: 78px;
-}
-
-.choco div:nth-child(5){
-    left: 104px;
-}
-
-.choco div:nth-child(6){
-    left: 130px;
-}
-
-.choco div:nth-child(7){
-    left: 156px;
-}
-
-.cake2{
-    bottom: 96.5px;
-    left: 60px;
-    transform: scale(0.9);
-}
-
-.decoration div{
+.birthday-text {
     position: absolute;
+    color: #FF69B4; /* Pink text color */
+    font-size: 0; /* Start hidden */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    top: 50%; /* Center vertically */
+    left: 50%;
+    transform: translate(-50%, 150px); /* Position below the cake, adjust as needed */
+    opacity: 0;
+    animation: textAppear 1s forwards 4.5s; /* Appear after candle */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
-.decoration div:nth-child(1){
-    height: 10px;
-    width: 10px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 20px;
-    left: 50px;
+/* --- Keyframe Animations --- */
+
+@keyframes cakeFall {
+    0% { transform: translateY(-500px); }
+    100% { transform: translateY(0); }
 }
 
-.decoration div:nth-child(2){
-    height: 6px;
-    width: 6px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 50px;
-    left: 30px;
+@keyframes layerAppear {
+    0% { opacity: 0; transform: translateY(50px) translateX(-50%); }
+    100% { opacity: 1; transform: translateY(0) translateX(-50%); }
 }
 
-.decoration div:nth-child(3){
-    height: 12px;
-    width: 12px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 30px;
-    left: 100px;
+@keyframes candleAppear {
+    0% { opacity: 0; transform: translateY(20px) translateX(-50%); }
+    100% { opacity: 1; transform: translateY(0) translateX(-50%); }
 }
 
-.decoration div:nth-child(4){
-    height: 4px;
-    width: 4px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 50px;
-    left: 130px;
+@keyframes flameGlow {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px #FFD700); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 10px #FFD700); }
 }
 
-.decoration div:nth-child(5){
-    height: 8px;
-    width: 8px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 30px;
-    left: 160px;
-}
-
-.decoration div:nth-child(6){
-    height: 9px;
-    width: 9px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 50px;
-    left: 60px;
-}
-
-.decoration div:nth-child(7){
-    height: 6.6px;
-    width: 6.6px;
-    background: #7105ed;
-    border-radius: 50%;
-    top: 30px;
-    left: 10px;
-}
-
-.cake3{
-    bottom: 157px;
-    left: 60px;
-    transform: scale(0.8);
-}
-
-.cake4{
-    left: 60px;
-    bottom: 209.5px;
-    transform: scale(0.7);
-}
-
-.candle{
-    position: absolute;
-    width: 10px;
-    height: 40px;
-    background-color: #a5a5a5;
-    bottom: 269.5px;
-    left: 143px;
-}
-
-.flame{
-    position: absolute;
-    background: #f4d03f;
-    opacity: 0.9;
-    box-shadow: inset 0px 15px 5px #d35400,
-    5px 15px 20px #fbffa3;
-    width: 15px;
-    height: 25px;
-    border-radius: 50%;
-    bottom: 308px;
-    left: 140.3px;
-    animation: flame 0.5s infinite;
-}
-
-@keyframes flame{
-    from,
-    to{
-        transform: scale(1.1);
-    }
-    25%{
-        transform: scale(0.9,1.0);
-    }
-    50%{
-        transform: scale(1.1,0.9);
-    }
-    75%{
-        transform: scale(0.95,1.05);
-    }
+@keyframes textAppear {
+    0% { font-size: 0; opacity: 0; transform: translate(-50%, 150px) scale(0.5); }
+    70% { font-size: 3em; opacity: 1; transform: translate(-50%, 150px) scale(1.1); }
+    100% { font-size: 3em; opacity: 1; transform: translate(-50%, 150px) scale(1); }
 }
